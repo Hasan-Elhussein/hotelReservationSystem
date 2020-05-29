@@ -21,6 +21,8 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class signup extends JFrame {
 
@@ -72,7 +74,24 @@ public class signup extends JFrame {
 		lblTelefonNumarasi.setBounds(20, 71, 150, 14);
 		contentPane.add(lblTelefonNumarasi);
 		
+		JLabel lblHata = new JLabel("");
+		lblHata.setForeground(Color.RED);
+		lblHata.setBounds(218, 99, 89, 14);
+		contentPane.add(lblHata);
+		
 		tf_telefonNo = new JTextField();
+		tf_telefonNo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				try {
+					long i = Long.parseLong(tf_telefonNo.getText());
+					
+					lblHata.setText("");
+				} catch (NumberFormatException e2) {
+					lblHata.setText("Hatali Giris!");
+				}
+			}
+		});
 		tf_telefonNo.setColumns(10);
 		tf_telefonNo.setBounds(20, 96, 188, 20);
 		contentPane.add(tf_telefonNo);
@@ -101,22 +120,41 @@ public class signup extends JFrame {
 				
 				//(hasan) 3 degiskenin degerleri query kodun icine yazip sql veri tabanina aktarma kodu
 				String kullanici_ad = tf_kullaniciAdi.getText(); 	
-				String phone_no = tf_telefonNo.getText();
+				String p_no = tf_telefonNo.getText();
+				long phone_no = Long.parseLong(p_no);
 				String parola = String.valueOf(pf_parola.getPassword());
 
 				PreparedStatement ps;
 				String query = "INSERT INTO users(phone_no,name,pass) VALUES(?,?,?)";
 		        
 		            try {
-						ps = DBconnection.getConnection().prepareStatement(query);
-						ps.setString(1, phone_no);
-						ps.setString(2, kullanici_ad);
-						ps.setString(3, parola);
-						
+
+						//(hasan) degiskenlerin bos olup olmadigini kontrol eden kod
+				        if(p_no.equals(""))
+				        {
+				            JOptionPane.showMessageDialog(null, "Telefon numaranizi giriniz!");
+				        }
+				        else if(kullanici_ad.equals(""))
+				        {
+				            JOptionPane.showMessageDialog(null, "Kullanici Adinizi giriniz!");
+				        }
+				        else if(parola.equals(""))
+				        {
+				            JOptionPane.showMessageDialog(null, "Parolayi giriniz!");
+				        }
+				        else {
+				        	
+							ps = DBconnection.getConnection().prepareStatement(query);
+							ps.setLong(1, phone_no);
+							ps.setString(2, kullanici_ad);
+							ps.setString(3, parola);
+							
 			            if(ps.executeUpdate() > 0)
 			            {
 			                JOptionPane.showMessageDialog(null, "Basarli bir sekilde hesaninizi olusturuldu");
 			            }
+			            
+				        }
 					} catch (SQLException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -140,5 +178,7 @@ public class signup extends JFrame {
 		pf_parola = new JPasswordField();
 		pf_parola.setBounds(20, 152, 188, 20);
 		contentPane.add(pf_parola);
+		
+
 	}
 }
