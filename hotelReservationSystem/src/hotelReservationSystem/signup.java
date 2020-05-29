@@ -2,6 +2,7 @@ package hotelReservationSystem;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -99,7 +100,8 @@ public class signup extends JFrame {
 		contentPane.add(btnKayitOlustur);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\hassa\\Desktop\\newuser.png"));
+		Image img = new ImageIcon(this.getClass().getResource("/newuser.png")).getImage();
+		lblNewLabel.setIcon(new ImageIcon(img));
 		lblNewLabel.setBounds(272, 27, 234, 237);
 		contentPane.add(lblNewLabel);
 		
