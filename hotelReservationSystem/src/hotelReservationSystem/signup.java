@@ -91,6 +91,31 @@ public class signup extends JFrame {
 		JButton btnKayitOlustur = new JButton("Kayit Olustur");
 		btnKayitOlustur.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				//(hasan) 3 degiskenin degerleri query kodun icine yazip sql veri tabanina aktarma kodu
+				String kullanici_ad = tf_kullaniciAdi.getText(); 	
+				String phone_no = tf_telefonNo.getText();
+				String parola = String.valueOf(pf_parola.getPassword());
+
+				PreparedStatement ps;
+				String query = "INSERT INTO users(phone_no,name,pass) VALUES(?,?,?)";
+		        
+		            try {
+						ps = DBconnection.getConnection().prepareStatement(query);
+						ps.setString(1, phone_no);
+						ps.setString(2, kullanici_ad);
+						ps.setString(3, parola);
+						
+			            if(ps.executeUpdate() > 0)
+			            {
+			                JOptionPane.showMessageDialog(null, "Basarli bir sekilde hesaninizi olusturuldu");
+			            }
+					} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+		            
+
 
 			}
 		});
