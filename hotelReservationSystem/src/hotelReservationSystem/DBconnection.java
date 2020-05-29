@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 
 public class DBconnection {
 	
-	public Connection getConnection() {
+	public static Connection getConnection() {
 		
 		Connection connection=null;
 		try {

@@ -1,0 +1,110 @@
+package hotelReservationSystem;
+
+import java.awt.BorderLayout;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+
+import java.sql.PreparedStatement;
+
+import java.awt.Color;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import javax.swing.JPasswordField;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.awt.event.ActionEvent;
+
+public class signup extends JFrame {
+
+	private JPanel contentPane;
+	private JTextField tf_kullaniciAdi;
+	private JTextField tf_telefonNo;
+	private JPasswordField pf_parola;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					signup frame = new signup();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
+	public signup() {
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 550, 350);
+		contentPane = new JPanel();
+		contentPane.setBackground(new Color(102, 205, 170));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		
+		tf_kullaniciAdi = new JTextField();
+		tf_kullaniciAdi.setColumns(10);
+		tf_kullaniciAdi.setBounds(20, 40, 188, 20);
+		contentPane.add(tf_kullaniciAdi);
+		
+		JLabel lblKullaniciAdi = new JLabel("Kullanici Adi:");
+		lblKullaniciAdi.setForeground(Color.WHITE);
+		lblKullaniciAdi.setBounds(20, 15, 150, 14);
+		contentPane.add(lblKullaniciAdi);
+		
+		JLabel lblTelefonNumarasi = new JLabel("Telefon Numarasi:");
+		lblTelefonNumarasi.setForeground(Color.WHITE);
+		lblTelefonNumarasi.setBounds(20, 71, 150, 14);
+		contentPane.add(lblTelefonNumarasi);
+		
+		tf_telefonNo = new JTextField();
+		tf_telefonNo.setColumns(10);
+		tf_telefonNo.setBounds(20, 96, 188, 20);
+		contentPane.add(tf_telefonNo);
+		
+		JLabel lblParola = new JLabel("Parola:");
+		lblParola.setForeground(Color.WHITE);
+		lblParola.setBounds(20, 127, 150, 14);
+		contentPane.add(lblParola);
+		
+		JButton button = new JButton("Giris");
+		button.setForeground(Color.WHITE);
+		button.setBackground(new Color(30, 144, 255));
+		button.setBounds(20, 265, 89, 23);
+		contentPane.add(button);
+		
+		JButton btnKayitOlustur = new JButton("Kayit Olustur");
+		btnKayitOlustur.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+			}
+		});
+		btnKayitOlustur.setForeground(Color.WHITE);
+		btnKayitOlustur.setBackground(Color.RED);
+		btnKayitOlustur.setBounds(20, 231, 188, 23);
+		contentPane.add(btnKayitOlustur);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon("C:\\Users\\hassa\\Desktop\\newuser.png"));
+		lblNewLabel.setBounds(272, 27, 234, 237);
+		contentPane.add(lblNewLabel);
+		
+		pf_parola = new JPasswordField();
+		pf_parola.setBounds(20, 152, 188, 20);
+		contentPane.add(pf_parola);
+	}
+}
