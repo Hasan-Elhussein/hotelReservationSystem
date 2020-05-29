@@ -50,7 +50,7 @@ public class signup extends JFrame {
 	 */
 	public signup() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 550, 350);
+		setBounds(400, 200, 550, 350);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(102, 205, 170));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -83,6 +83,13 @@ public class signup extends JFrame {
 		contentPane.add(lblParola);
 		
 		JButton button = new JButton("Giris");
+		button.addActionListener(new ActionListener() {
+			//(hasan) bu formu kapatip, farkli bir formu acan kod
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new login().setVisible(true);
+			}
+		});
 		button.setForeground(Color.WHITE);
 		button.setBackground(new Color(30, 144, 255));
 		button.setBounds(20, 265, 89, 23);

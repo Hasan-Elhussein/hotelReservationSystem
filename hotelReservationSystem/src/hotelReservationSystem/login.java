@@ -48,7 +48,7 @@ public class login extends JFrame {
 	 */
 	public login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 550, 350);
+		setBounds(400, 200, 550, 350);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(102, 205, 170));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -84,8 +84,12 @@ public class login extends JFrame {
 		btnNewButton_1.setBackground(new Color(255, 0, 0));
 		btnNewButton_1.setForeground(new Color(255, 255, 255));
 		btnNewButton_1.addActionListener(new ActionListener() {
+			//(hasan) bu formu kapatip, farkli bir formu acan kod
 			public void actionPerformed(ActionEvent e) {
+				dispose();
+				new signup().setVisible(true);
 			}
+
 		});
 		btnNewButton_1.setBounds(119, 246, 89, 23);
 		contentPane.add(btnNewButton_1);
