@@ -124,11 +124,11 @@ public class adminFrame extends JFrame {
 		rdbtn_suitOda.setBounds(195, 130, 150, 23);
 		contentPane.add(rdbtn_suitOda);
 		
-		JToggleButton tglbtnNewToggleButton = new JToggleButton("Tikla");
-		tglbtnNewToggleButton.setBackground(Color.RED);
-		tglbtnNewToggleButton.setForeground(Color.WHITE);
-		tglbtnNewToggleButton.setBounds(195, 186, 150, 23);
-		contentPane.add(tglbtnNewToggleButton);
+		JToggleButton tglbtn_tikla = new JToggleButton("Tikla");
+		tglbtn_tikla.setBackground(Color.RED);
+		tglbtn_tikla.setForeground(Color.WHITE);
+		tglbtn_tikla.setBounds(195, 186, 150, 23);
+		contentPane.add(tglbtn_tikla);
 		
 		JLabel lblDoluMu = new JLabel("Dolu mu?");
 		lblDoluMu.setForeground(Color.WHITE);
@@ -187,7 +187,7 @@ public class adminFrame extends JFrame {
 		         
 				
 				PreparedStatement ps;
-				String query = "INSERT INTO hotel1(id,oda_tipi,kisi_sayisi,ucret,tarih) VALUES(?,?,?,?,?)";
+				String query = "INSERT INTO hotel1(id,oda_tipi,kisi_sayisi,ucret,tarih,is_full) VALUES(?,?,?,?,?,?)";
 		        
 		            try {
 
@@ -204,7 +204,10 @@ public class adminFrame extends JFrame {
 							ps.setInt(3, kisiSayisi);
 							ps.setFloat(4, ucret);
 							ps.setDate(5, java.sql.Date.valueOf(df.format(dateChooser.getDate())));
-
+							if(tglbtn_tikla.isSelected() == true)
+								ps.setBoolean(6, true);
+							else 
+								ps.setBoolean(6, false);
 							
 			            if(ps.executeUpdate() > 0)
 			            {
