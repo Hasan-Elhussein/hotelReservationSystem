@@ -329,6 +329,46 @@ public class adminFrame extends JFrame {
 		contentPane.add(btn_ekle);
 		
 		JButton btn_sil = new JButton("Sil");
+		btn_sil.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				String tmp0 =(String)list_view.getSelectedValue();
+				int tmp = Integer.parseInt(tmp0);
+		        PreparedStatement ps;
+		        ResultSet rs;
+		        
+		        String query = "DELETE FROM `hotel1` WHERE id = "+tmp;
+
+		        	try {
+						ps = DBconnection.getConnection().prepareStatement(query);
+						ps.executeUpdate();
+			        	//rs = ps.executeQuery();
+			        	JOptionPane.showMessageDialog(null, "Oda silindi");
+			        	
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+		        	
+		        	
+					//(hasan) element silindikten sonra, listeyi yenileme yapan kod
+		            String query1 = "SELECT * FROM `hotel1`";
+		            DefaultListModel dlm = new DefaultListModel();
+		            try {
+						ps = DBconnection.getConnection().prepareStatement(query1);
+						rs = ps.executeQuery();
+						while(rs.next()) {
+							String id = rs.getString("id");
+							dlm.addElement(id);
+						}
+						list_view.setModel(dlm);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+
+				
+			}
+		});
 		btn_sil.setBounds(195, 277, 150, 23);
 		contentPane.add(btn_sil);
 		
