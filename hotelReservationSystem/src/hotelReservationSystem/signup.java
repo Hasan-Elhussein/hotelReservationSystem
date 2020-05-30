@@ -134,21 +134,21 @@ public class signup extends JFrame {
 		        boolean checkUser = false;
 		        String query0 = "SELECT * FROM `users` WHERE phone_no = ?";
 
-		  try {
-	        	ps0 = DBconnection.getConnection().prepareStatement(query0);
-	            ps0.setLong(1, phone_no);
+		        try {
+		        	ps0 = DBconnection.getConnection().prepareStatement(query0);
+		        	ps0.setLong(1, phone_no);
 	            
-	            rs = ps0.executeQuery();
+		        	rs = ps0.executeQuery();
 	            
-	            if(rs.next()) {
-	            	checkUser = true;
-	            	JOptionPane.showMessageDialog(null, "Kullanici mevcuttur!");
-	            }
+		        	if(rs.next()) {
+		        		checkUser = true;
+		        		JOptionPane.showMessageDialog(null, "Kullanici mevcuttur!");
+		        	}
 	            
-		} catch (SQLException e2) {
-			JOptionPane.showMessageDialog(null, "SQL'de hata olustu");
-			e2.printStackTrace();
-		}
+		        } catch (SQLException e2) {
+		        	JOptionPane.showMessageDialog(null, "SQL'de hata olustu");
+		        	e2.printStackTrace();
+		        }
 		
 		         
 				
