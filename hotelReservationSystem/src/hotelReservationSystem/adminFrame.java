@@ -57,15 +57,15 @@ public class adminFrame extends JFrame {
 				}
 				
 				//(hasan) frame ilk acildiginda listView icine bilgileri yazdiran kod
-		        PreparedStatement ps4;
-		        ResultSet rs4;
-	            String query4 = "SELECT * FROM `hotel1`";
+		        PreparedStatement ps;
+		        ResultSet rs;
+	            String query = "SELECT * FROM `hotel1`";
 	            DefaultListModel dlm = new DefaultListModel();
 	            try {
-					ps4 = DBconnection.getConnection().prepareStatement(query4);
-					rs4 = ps4.executeQuery();
-					while(rs4.next()) {
-						String id = rs4.getString("id");
+					ps = DBconnection.getConnection().prepareStatement(query);
+					rs = ps.executeQuery();
+					while(rs.next()) {
+						String id = rs.getString("id");
 						dlm.addElement(id);
 					}
 					list_view.setModel(dlm);
@@ -181,14 +181,14 @@ public class adminFrame extends JFrame {
 				
 				try {
 					
-			        PreparedStatement ps3;
-			        ResultSet rs3;
-		        	ps3 = DBconnection.getConnection().prepareStatement(query3);
-		        	ps3.setInt(1, tmp);
-		        	rs3 = ps3.executeQuery();
+			        PreparedStatement ps;
+			        ResultSet rs;
+		        	ps = DBconnection.getConnection().prepareStatement(query3);
+		        	ps.setInt(1, tmp);
+		        	rs = ps.executeQuery();
 		        	tf_odaNumarasi.setText(tmp0);
-		        	if(rs3.next()) {
-		        		String add1 = rs3.getString("oda_tipi");
+		        	if(rs.next()) {
+		        		String add1 = rs.getString("oda_tipi");
 		        		switch (add1) {
 						case "Tek Yatak": {
 							rdbtn_tekYatak.setSelected(true);
@@ -205,13 +205,13 @@ public class adminFrame extends JFrame {
 						default:
 							throw new IllegalArgumentException("Unexpected value: " + add1);
 						}
-		        		String add2 = rs3.getString("kisi_sayisi");
+		        		String add2 = rs.getString("kisi_sayisi");
 			        	tf_kisiSayisi.setText(add2);
-			        	String add3 = rs3.getString("ucret");
+			        	String add3 = rs.getString("ucret");
 			        	tf_ucret.setText(add3);
-			        	Date add4 = rs3.getDate("tarih");
+			        	Date add4 = rs.getDate("tarih");
 			        	dateChooser.setDate(add4);
-			        	int add5 = rs3.getInt("is_full");
+			        	int add5 = rs.getInt("is_full");
 			        	if(add5 == 1)
 			        		tglbtn_tikla.setSelected(true);
 			        	else
