@@ -17,6 +17,7 @@ import javax.swing.JToggleButton;
 import javax.swing.JSlider;
 import javax.swing.JProgressBar;
 import javax.swing.ButtonGroup;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -27,8 +28,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class adminFrame extends JFrame {
 
@@ -40,6 +44,8 @@ public class adminFrame extends JFrame {
 	/**
 	 * Launch the application.
 	 */
+	static JList list_view = new JList();
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -49,6 +55,25 @@ public class adminFrame extends JFrame {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				
+				//(hasan) frame ilk acildiginda listView icine bilgileri yazdiran kod
+		        PreparedStatement ps4;
+		        ResultSet rs4;
+	            String query4 = "SELECT * FROM `hotel1`";
+	            DefaultListModel dlm = new DefaultListModel();
+	            try {
+					ps4 = DBconnection.getConnection().prepareStatement(query4);
+					rs4 = ps4.executeQuery();
+					while(rs4.next()) {
+						String id = rs4.getString("id");
+						dlm.addElement(id);
+					}
+					list_view.setModel(dlm);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+				
 			}
 		});
 	}
@@ -124,7 +149,7 @@ public class adminFrame extends JFrame {
 		rdbtn_suitOda.setBounds(195, 130, 150, 23);
 		contentPane.add(rdbtn_suitOda);
 		
-		JToggleButton tglbtn_tikla = new JToggleButton("Tikla");
+		JToggleButton tglbtn_tikla = new JToggleButton("Dolu");
 		tglbtn_tikla.setBackground(Color.RED);
 		tglbtn_tikla.setForeground(Color.WHITE);
 		tglbtn_tikla.setBounds(195, 186, 150, 23);
@@ -143,7 +168,64 @@ public class adminFrame extends JFrame {
 		JDateChooser dateChooser = new JDateChooser();
 		dateChooser.setBounds(10, 245, 150, 20);
 		contentPane.add(dateChooser);
-		dateChooser.setDateFormatString("yyyy-mm-dd");
+		dateChooser.setDateFormatString("yyyy-MM-dd");
+		
+		list_view.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				//(hasan) listeden bir elemana tiklandiginda o elemanin bilgileri getiren ve ekrana yazdiran
+				String tmp0 =(String)list_view.getSelectedValue();
+				int tmp = Integer.parseInt(tmp0);
+				String query3="SELECT * FROM hotel1 WHERE id = ?";
+				
+				try {
+					
+			        PreparedStatement ps3;
+			        ResultSet rs3;
+		        	ps3 = DBconnection.getConnection().prepareStatement(query3);
+		        	ps3.setInt(1, tmp);
+		        	rs3 = ps3.executeQuery();
+		        	tf_odaNumarasi.setText(tmp0);
+		        	if(rs3.next()) {
+		        		String add1 = rs3.getString("oda_tipi");
+		        		switch (add1) {
+						case "Tek Yatak": {
+							rdbtn_tekYatak.setSelected(true);
+							break;
+							}
+						case "Cift Yatak":{
+							rdbtn_ciftYatak.setSelected(true);
+							break;
+						}
+						case "Suit Oda":{
+							rdbtn_suitOda.setSelected(true);
+							break;
+						}
+						default:
+							throw new IllegalArgumentException("Unexpected value: " + add1);
+						}
+		        		String add2 = rs3.getString("kisi_sayisi");
+			        	tf_kisiSayisi.setText(add2);
+			        	String add3 = rs3.getString("ucret");
+			        	tf_ucret.setText(add3);
+			        	Date add4 = rs3.getDate("tarih");
+			        	dateChooser.setDate(add4);
+			        	int add5 = rs3.getInt("is_full");
+			        	if(add5 == 1)
+			        		tglbtn_tikla.setSelected(true);
+			        	else
+			        		tglbtn_tikla.setSelected(false);
+		        	}
+				} catch (Exception e2) {
+					
+				}
+				
+				
+			}
+		});
+		list_view.setBounds(375, 75, 149, 225);
+		contentPane.add(list_view);
 		
 		JButton btn_ekle = new JButton("Ekle");
 		btn_ekle.addActionListener(new ActionListener() {
@@ -219,6 +301,27 @@ public class adminFrame extends JFrame {
 					}
 		            
 				//=============================================================================================//
+		            
+		            //(hasan)sql veritabinindan bilgileri getirip, list icine aktaran kod
+		            String query2 = "SELECT * FROM `hotel1`";
+		            DefaultListModel dlm = new DefaultListModel();
+		            ResultSet rs2;
+		            try {
+						ps = DBconnection.getConnection().prepareStatement(query2);
+						rs = ps.executeQuery();
+						while(rs.next()) {
+							String id = rs.getString("id");
+							dlm.addElement(id);
+						}
+						list_view.setModel(dlm);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}
+
+		            
+		            
+		          //=============================================================================================//
+		            
 				
 			}
 		});
@@ -229,9 +332,7 @@ public class adminFrame extends JFrame {
 		btn_sil.setBounds(195, 277, 150, 23);
 		contentPane.add(btn_sil);
 		
-		JList list = new JList();
-		list.setBounds(375, 75, 149, 225);
-		contentPane.add(list);
+
 		
 		JLabel lblOda = new JLabel("Odalar:");
 		lblOda.setForeground(Color.WHITE);
@@ -242,6 +343,11 @@ public class adminFrame extends JFrame {
 		lblTarih.setForeground(Color.WHITE);
 		lblTarih.setBounds(10, 218, 150, 14);
 		contentPane.add(lblTarih);
+		
+		JLabel lblKirmiziDolu = new JLabel("Kirmizi = Dolu");
+		lblKirmiziDolu.setForeground(Color.WHITE);
+		lblKirmiziDolu.setBounds(229, 220, 116, 14);
+		contentPane.add(lblKirmiziDolu);
 		
 	}
 }
