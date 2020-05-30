@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import java.sql.PreparedStatement;
-
+import java.sql.ResultSet;
 import java.awt.Color;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -126,7 +126,32 @@ public class signup extends JFrame {
 				long phone_no = Long.parseLong(p_no);
 				String parola = String.valueOf(pf_parola.getPassword());
 				int tf_teleonNo_length = tf_telefonNo.getText().length();
+				
+				
+				//(hasan) yeni kullanici veritabanda mevcut olup olmadigini kontrol eden kod
+		        PreparedStatement ps0;
+		        ResultSet rs;
+		        boolean checkUser = false;
+		        String query0 = "SELECT * FROM `users` WHERE phone_no = ?";
 
+		  try {
+	        	ps0 = DBconnection.getConnection().prepareStatement(query0);
+	            ps0.setLong(1, phone_no);
+	            
+	            rs = ps0.executeQuery();
+	            
+	            if(rs.next()) {
+	            	checkUser = true;
+	            	JOptionPane.showMessageDialog(null, "Kullanici mevcuttur!");
+	            }
+	            
+		} catch (SQLException e2) {
+			JOptionPane.showMessageDialog(null, "SQL'de hata olustu");
+			e2.printStackTrace();
+		}
+		
+		         
+				
 				PreparedStatement ps;
 				String query = "INSERT INTO users(phone_no,name,pass) VALUES(?,?,?)";
 		        
@@ -149,8 +174,8 @@ public class signup extends JFrame {
 							JOptionPane.showMessageDialog(null, "11 haneli telefon numaranizi giriniz!");
 						else if(tf_teleonNo_length >11)
 							JOptionPane.showMessageDialog(null, "11 haneli telefon numaranizi giriniz!");
-				        else {
-				        	
+				        //(hasan) kullanici mevcut ise alttaki kod calismaz
+				        else if(checkUser == false){
 							ps = DBconnection.getConnection().prepareStatement(query);
 							ps.setLong(1, phone_no);
 							ps.setString(2, kullanici_ad);
@@ -163,11 +188,9 @@ public class signup extends JFrame {
 			            
 				        }
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 		            
-
 
 			}
 		});
