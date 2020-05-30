@@ -81,15 +81,17 @@ public class signup extends JFrame {
 		
 		tf_telefonNo = new JTextField();
 		tf_telefonNo.addKeyListener(new KeyAdapter() {
+			//(hasan) girdiyi bir sayi olup ilmadigini kontrol eden kod
 			@Override
 			public void keyPressed(KeyEvent e) {
+				
 				try {
 					long i = Long.parseLong(tf_telefonNo.getText());
-					
 					lblHata.setText("");
 				} catch (NumberFormatException e2) {
 					lblHata.setText("Hatali Giris!");
 				}
+				
 			}
 		});
 		tf_telefonNo.setColumns(10);
@@ -123,12 +125,12 @@ public class signup extends JFrame {
 				String p_no = tf_telefonNo.getText();
 				long phone_no = Long.parseLong(p_no);
 				String parola = String.valueOf(pf_parola.getPassword());
+				int tf_teleonNo_length = tf_telefonNo.getText().length();
 
 				PreparedStatement ps;
 				String query = "INSERT INTO users(phone_no,name,pass) VALUES(?,?,?)";
 		        
 		            try {
-
 						//(hasan) degiskenlerin bos olup olmadigini kontrol eden kod
 				        if(p_no.equals(""))
 				        {
@@ -142,6 +144,11 @@ public class signup extends JFrame {
 				        {
 				            JOptionPane.showMessageDialog(null, "Parolayi giriniz!");
 				        }
+				        //(hasan) telefonNo uzunlugu 11 olup olmadigini kontrol edem kod
+						else if(tf_teleonNo_length < 11)
+							JOptionPane.showMessageDialog(null, "11 haneli telefon numaranizi giriniz!");
+						else if(tf_teleonNo_length >11)
+							JOptionPane.showMessageDialog(null, "11 haneli telefon numaranizi giriniz!");
 				        else {
 				        	
 							ps = DBconnection.getConnection().prepareStatement(query);
