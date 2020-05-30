@@ -1,14 +1,14 @@
 package hotelReservationSystem;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 
-public class mainFrame extends JFrame {
+public class adminFrame extends JFrame {
 
 	private JPanel contentPane;
 
@@ -19,7 +19,7 @@ public class mainFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					mainFrame frame = new mainFrame();
+					adminFrame frame = new adminFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -31,20 +31,14 @@ public class mainFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public mainFrame() {
+	public adminFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(400, 200, 550, 350);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(102, 205, 170));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("New label");
-		lblNewLabel.setBounds(184, 98, 46, 14);
-		contentPane.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		lblNewLabel_1.setBounds(184, 123, 46, 14);
-		contentPane.add(lblNewLabel_1);
 	}
+
 }

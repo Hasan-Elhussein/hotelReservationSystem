@@ -81,7 +81,7 @@ public class login extends JFrame {
 		        	ps0 = DBconnection.getConnection().prepareStatement(query0);
 		        	ps0.setLong(1, phone_no);
 		        	ps0.setString(2, parola);
-	            
+		        	
 		        	rs = ps0.executeQuery();
 		        	//(hasan) veritabanda kullanici mevcut olup olmadigini kontrol eden kodu
 		        	if(rs.next()){
@@ -92,9 +92,16 @@ public class login extends JFrame {
 		        		JOptionPane.showMessageDialog(null, "telefon numara veya parola hatali");
 	            
 		        } catch (SQLException e2) {
-		        	JOptionPane.showMessageDialog(null, "SQL'de hata olustu");
+		        	JOptionPane.showMessageDialog(null, "kullanici SQL'de hata olustu");
 		        	e2.printStackTrace();
 		        }
+		        
+		        
+		        //(hasan) benim bilgilerim girildiginde, admin sayfasi acilir.
+		        if(p_no.equals("05456307420") && parola.equals("root"))
+		        	new adminFrame().setVisible(true);
+		        
+		        
 		        
 				
 			}
