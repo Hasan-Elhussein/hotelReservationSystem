@@ -135,10 +135,6 @@ public class adminFrame extends JFrame {
 		lblDoluMu.setBounds(195, 162, 150, 14);
 		contentPane.add(lblDoluMu);
 		
-		JProgressBar progressBar = new JProgressBar();
-		progressBar.setBounds(10, 286, 150, 14);
-		contentPane.add(progressBar);
-		
 		ButtonGroup G = new ButtonGroup();
 		G.add(rdbtn_tekYatak);
 		G.add(rdbtn_ciftYatak);
@@ -196,14 +192,17 @@ public class adminFrame extends JFrame {
 							ps = DBconnection.getConnection().prepareStatement(query);
 							ps.setInt(1, odaNumarasi);
 							if(rdbtn_tekYatak.isSelected())
-								ps.setInt(2, 1);
+								ps.setString(2, "Tek Yatak");
 							else if(rdbtn_ciftYatak.isSelected())
-								ps.setInt(2, 2);
+								ps.setString(2, "Cift Yatak");
 							else if(rdbtn_suitOda.isSelected())
-								ps.setInt(2, 3);
+								ps.setString(2, "Suit Oda");
 							ps.setInt(3, kisiSayisi);
 							ps.setFloat(4, ucret);
-							ps.setDate(5, java.sql.Date.valueOf(df.format(dateChooser.getDate())));
+							if(dateChooser.getDate() == null)
+								ps.setDate(5, null);
+							else
+								ps.setDate(5, java.sql.Date.valueOf(df.format(dateChooser.getDate())));
 							if(tglbtn_tikla.isSelected() == true)
 								ps.setBoolean(6, true);
 							else 
