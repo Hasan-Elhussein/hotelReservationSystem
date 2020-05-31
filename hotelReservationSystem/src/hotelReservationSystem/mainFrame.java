@@ -150,6 +150,7 @@ public class mainFrame extends JFrame {
 		lblHotelReservationSystem.setFont(new Font("Tahoma", Font.BOLD, 18));
 		lblHotelReservationSystem.setBounds(147, 11, 231, 14);
 		contentPane.add(lblHotelReservationSystem);
+		setResizable(false);
 		
 		JLabel label = new JLabel("Oda Numarasi:");
 		label.setForeground(Color.WHITE);

@@ -89,6 +89,7 @@ public class adminFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setResizable(false);
 		
 		JLabel lblNewLabel = new JLabel("Administration Panel");
 		lblNewLabel.setForeground(Color.WHITE);

@@ -58,6 +58,7 @@ public class login extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		setResizable(false);
 		
 		JButton btnNewButton = new JButton("Giris");
 		btnNewButton.addActionListener(new ActionListener() {
