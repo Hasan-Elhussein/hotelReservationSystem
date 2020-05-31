@@ -15,6 +15,8 @@ import java.awt.Font;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.JTextField;
@@ -128,10 +130,16 @@ public class mainFrame extends JFrame {
 			        	Date add4 = rs.getDate("tarih");
 			        	dateChooser.setDate(add4);
 			        	int add5 = rs.getInt("is_full");
-			        	if(add5 == 1)
+			        	if(add5 == 1) {
 			        		tf_doluMu.setText("BOS");
-			        	else
+			        		tf_kisiSayisi.setEditable(true);
+			        		dateChooser.setEnabled(true);
+			        	}
+			        	else {
 			        		tf_doluMu.setText("DOLU");
+			        		tf_kisiSayisi.setEditable(false);
+			        		dateChooser.setEnabled(false);
+			        	}
 		        	}
 				} catch (Exception e2) {
 					
@@ -209,10 +217,39 @@ public class mainFrame extends JFrame {
 		
 		JLabel label_5 = new JLabel("Odalar:");
 		label_5.setForeground(Color.WHITE);
-		label_5.setBounds(375, 50, 150, 14);
+		label_5.setBounds(375, 50, 58, 14);
 		contentPane.add(label_5);
 		
 		JButton btnRezervasyonYap = new JButton("Rezervasyon yap");
+		btnRezervasyonYap.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				int odaNumarasi = Integer.parseInt(tf_odaNumarasi.getText());
+				int kisiSayisi = Integer.parseInt(tf_kisiSayisi.getText());
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+				
+				//(hasan) rezervasyon bilgileri veritabanina aktaran kodu
+				PreparedStatement ps;
+				String query = "UPDATE hotel1 SET kisi_sayisi=?, tarih=?, is_full=false WHERE id=?";
+				try {
+					
+					ps = DBconnection.getConnection().prepareStatement(query);
+					
+					ps.setInt(1, kisiSayisi);
+					ps.setDate(2, java.sql.Date.valueOf(df.format(dateChooser.getDate())));
+					ps.setInt(3, odaNumarasi);
+					
+					ps.executeUpdate();
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+				
+			}
+		});
 		btnRezervasyonYap.setBounds(121, 243, 150, 23);
 		contentPane.add(btnRezervasyonYap);
 		

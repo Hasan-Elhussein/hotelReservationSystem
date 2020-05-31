@@ -264,7 +264,7 @@ public class adminFrame extends JFrame {
 		        }
 		
 		         
-				
+		      //(hasan) oda bilgileri veritabanina aktaran kodu
 				PreparedStatement ps;
 				String query = "INSERT INTO hotel1(id,oda_tipi,kisi_sayisi,ucret,tarih,is_full) VALUES(?,?,?,?,?,?)";
 		        
