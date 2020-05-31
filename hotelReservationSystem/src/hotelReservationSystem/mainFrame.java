@@ -25,6 +25,7 @@ import java.awt.event.MouseEvent;
 import com.toedter.calendar.JDateChooser;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JSeparator;
 
 public class mainFrame extends JFrame {
 
@@ -45,6 +46,7 @@ public class mainFrame extends JFrame {
 	public static JTextField tf_kullanici;
 	JButton btnRezervasyonYap = new JButton("Rezervasyon yap");
 	JButton btnOdadanAyir = new JButton("Odadan ayril");
+	private JTextField textField;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -84,7 +86,7 @@ public class mainFrame extends JFrame {
 	 */
 	public mainFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(400, 200, 550, 350);
+		setBounds(400, 200, 515, 400);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(102, 205, 170));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -161,7 +163,7 @@ public class mainFrame extends JFrame {
 		});
 		
 		
-		listView.setBounds(375, 75, 149, 225);
+		listView.setBounds(350, 87, 149, 273);
 		contentPane.add(listView);
 		
 		JLabel lblHotelReservationSystem = new JLabel("Hotel Reservation System");
@@ -173,62 +175,62 @@ public class mainFrame extends JFrame {
 		
 		JLabel label = new JLabel("Oda Numarasi:");
 		label.setForeground(Color.WHITE);
-		label.setBounds(10, 76, 111, 14);
+		label.setBounds(10, 88, 111, 14);
 		contentPane.add(label);
 		
 		JLabel label_1 = new JLabel("Kisi Sayisi:");
 		label_1.setForeground(Color.WHITE);
-		label_1.setBounds(10, 175, 111, 14);
+		label_1.setBounds(10, 187, 111, 14);
 		contentPane.add(label_1);
 		
 		JLabel label_2 = new JLabel("Ucret: (TL)");
 		label_2.setForeground(Color.WHITE);
-		label_2.setBounds(10, 125, 111, 14);
+		label_2.setBounds(10, 137, 111, 14);
 		contentPane.add(label_2);
 		
 		JLabel label_3 = new JLabel("Oda Tipi:");
 		label_3.setForeground(Color.WHITE);
-		label_3.setBounds(10, 100, 111, 14);
+		label_3.setBounds(10, 112, 111, 14);
 		contentPane.add(label_3);
 		
 		JLabel label_4 = new JLabel("Dolu mu?");
 		label_4.setForeground(Color.WHITE);
-		label_4.setBounds(10, 150, 111, 14);
+		label_4.setBounds(10, 162, 111, 14);
 		contentPane.add(label_4);
 		
 		tf_odaNumarasi = new JTextField();
 		tf_odaNumarasi.setEditable(false);
 		tf_odaNumarasi.setColumns(10);
-		tf_odaNumarasi.setBounds(121, 73, 150, 20);
+		tf_odaNumarasi.setBounds(121, 85, 150, 20);
 		contentPane.add(tf_odaNumarasi);
 		
 		tf_odaTipi = new JTextField();
 		tf_odaTipi.setEditable(false);
 		tf_odaTipi.setColumns(10);
-		tf_odaTipi.setBounds(121, 97, 150, 20);
+		tf_odaTipi.setBounds(121, 109, 150, 20);
 		contentPane.add(tf_odaTipi);
 		
 		tf_ucret = new JTextField();
 		tf_ucret.setEditable(false);
 		tf_ucret.setColumns(10);
-		tf_ucret.setBounds(121, 122, 150, 20);
+		tf_ucret.setBounds(121, 134, 150, 20);
 		contentPane.add(tf_ucret);
 		
 		tf_doluMu = new JTextField();
 		tf_doluMu.setEditable(false);
 		tf_doluMu.setColumns(10);
-		tf_doluMu.setBounds(121, 147, 150, 20);
+		tf_doluMu.setBounds(121, 159, 150, 20);
 		contentPane.add(tf_doluMu);
 		
 		tf_kisiSayisi = new JTextField();
 		tf_kisiSayisi.setEditable(false);
 		tf_kisiSayisi.setColumns(10);
-		tf_kisiSayisi.setBounds(121, 172, 150, 20);
+		tf_kisiSayisi.setBounds(121, 184, 150, 20);
 		contentPane.add(tf_kisiSayisi);
 		
 		JLabel label_5 = new JLabel("Odalar:");
 		label_5.setForeground(Color.WHITE);
-		label_5.setBounds(375, 50, 58, 14);
+		label_5.setBounds(350, 62, 58, 14);
 		contentPane.add(label_5);
 		
 		btnRezervasyonYap.addActionListener(new ActionListener() {
@@ -262,7 +264,7 @@ public class mainFrame extends JFrame {
 				
 			}
 		});
-		btnRezervasyonYap.setBounds(121, 243, 150, 23);
+		btnRezervasyonYap.setBounds(121, 301, 150, 23);
 		contentPane.add(btnRezervasyonYap);
 		
 		btnOdadanAyir.addActionListener(new ActionListener() {
@@ -290,18 +292,18 @@ public class mainFrame extends JFrame {
 				
 			}
 		});
-		btnOdadanAyir.setBounds(121, 277, 150, 23);
+		btnOdadanAyir.setBounds(121, 337, 150, 23);
 		contentPane.add(btnOdadanAyir);
 		dateChooser.getCalendarButton().setForeground(new Color(255, 255, 255));
 		dateChooser.getCalendarButton().setEnabled(false);
 		
-		dateChooser.setBounds(121, 200, 150, 20);
+		dateChooser.setBounds(121, 209, 150, 20);
 		contentPane.add(dateChooser);
 		dateChooser.setEnabled(false);
 		
 		JLabel lblTarih = new JLabel("Tarih:");
 		lblTarih.setForeground(Color.WHITE);
-		lblTarih.setBounds(10, 200, 111, 14);
+		lblTarih.setBounds(10, 212, 111, 14);
 		contentPane.add(lblTarih);
 		
 		JButton btnNewButton = new JButton("Yenile");
@@ -327,7 +329,7 @@ public class mainFrame extends JFrame {
 	            
 			}
 		});
-		btnNewButton.setBounds(435, 46, 89, 23);
+		btnNewButton.setBounds(410, 58, 89, 23);
 		contentPane.add(btnNewButton);
 		
 		JLabel lblMerhabalar = new JLabel("Merhabalar:");
@@ -340,5 +342,16 @@ public class mainFrame extends JFrame {
 		tf_kullanici.setColumns(10);
 		tf_kullanici.setBounds(121, 42, 150, 20);
 		contentPane.add(tf_kullanici);
+		
+		textField = new JTextField();
+		textField.setEditable(false);
+		textField.setColumns(10);
+		textField.setBounds(121, 234, 150, 20);
+		contentPane.add(textField);
+		
+		JLabel lblOdaSahibi = new JLabel("Oda Sahibi:");
+		lblOdaSahibi.setForeground(Color.WHITE);
+		lblOdaSahibi.setBounds(10, 237, 111, 14);
+		contentPane.add(lblOdaSahibi);
 	}
 }
