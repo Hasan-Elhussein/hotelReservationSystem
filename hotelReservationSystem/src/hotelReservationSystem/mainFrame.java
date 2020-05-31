@@ -46,7 +46,7 @@ public class mainFrame extends JFrame {
 	public static JTextField tf_kullanici;
 	JButton btnRezervasyonYap = new JButton("Rezervasyon yap");
 	JButton btnOdadanAyir = new JButton("Odadan ayril");
-	private JTextField textField;
+	private JTextField tf_odaSahibi;
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -86,7 +86,7 @@ public class mainFrame extends JFrame {
 	 */
 	public mainFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(400, 200, 515, 400);
+		setBounds(400, 200, 525, 407);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(102, 205, 170));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -152,6 +152,11 @@ public class mainFrame extends JFrame {
 			        		btnOdadanAyir.setEnabled(true);
 			        	else
 			        		btnOdadanAyir.setEnabled(false);
+			        	tf_odaSahibi.setText(add6);
+			        	
+			        	//(hasan) kullanici dogru bir sekilde giris yapmadiysa, rezervasyon yapmaya izin verilmez
+			        	if(tf_kullanici.getText().equals(""))
+			        		btnRezervasyonYap.setEnabled(false);
 
 		        	}
 				} catch (Exception e2) {
@@ -163,7 +168,7 @@ public class mainFrame extends JFrame {
 		});
 		
 		
-		listView.setBounds(350, 87, 149, 273);
+		listView.setBounds(350, 87, 149, 237);
 		contentPane.add(listView);
 		
 		JLabel lblHotelReservationSystem = new JLabel("Hotel Reservation System");
@@ -266,6 +271,8 @@ public class mainFrame extends JFrame {
 		});
 		btnRezervasyonYap.setBounds(121, 301, 150, 23);
 		contentPane.add(btnRezervasyonYap);
+		btnOdadanAyir.setForeground(new Color(255, 255, 255));
+		btnOdadanAyir.setBackground(new Color(255, 0, 0));
 		
 		btnOdadanAyir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -343,15 +350,43 @@ public class mainFrame extends JFrame {
 		tf_kullanici.setBounds(121, 42, 150, 20);
 		contentPane.add(tf_kullanici);
 		
-		textField = new JTextField();
-		textField.setEditable(false);
-		textField.setColumns(10);
-		textField.setBounds(121, 234, 150, 20);
-		contentPane.add(textField);
+		tf_odaSahibi = new JTextField();
+		tf_odaSahibi.setEditable(false);
+		tf_odaSahibi.setColumns(10);
+		tf_odaSahibi.setBounds(121, 234, 150, 20);
+		contentPane.add(tf_odaSahibi);
 		
 		JLabel lblOdaSahibi = new JLabel("Oda Sahibi:");
 		lblOdaSahibi.setForeground(Color.WHITE);
 		lblOdaSahibi.setBounds(10, 237, 111, 14);
 		contentPane.add(lblOdaSahibi);
+		
+		JButton btnBosOdalariFilterle = new JButton("Bos odalari filterle");
+		btnBosOdalariFilterle.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				//(hasan) listede sadece bos olan odalari gosteren kod
+		        PreparedStatement ps;
+		        ResultSet rs;
+	            String query = "SELECT * FROM `hotel1` WHERE is_full=true";
+	            DefaultListModel dlm = new DefaultListModel();
+	            try {
+					ps = DBconnection.getConnection().prepareStatement(query);
+					rs = ps.executeQuery();
+					while(rs.next()) {
+						String id = rs.getString("id");
+						dlm.addElement(id);
+					}
+					listView.setModel(dlm);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+				
+				
+			}
+		});
+		btnBosOdalariFilterle.setBounds(349, 337, 150, 23);
+		contentPane.add(btnBosOdalariFilterle);
 	}
 }
