@@ -21,6 +21,8 @@ import javax.swing.JTextField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import com.toedter.calendar.JDateChooser;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class mainFrame extends JFrame {
 
@@ -227,5 +229,31 @@ public class mainFrame extends JFrame {
 		lblTarih.setForeground(Color.WHITE);
 		lblTarih.setBounds(10, 200, 111, 14);
 		contentPane.add(lblTarih);
+		
+		JButton btnNewButton = new JButton("Yenile");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				//(hasan) listeyi yenileme kodu
+		        PreparedStatement ps;
+		        ResultSet rs;
+	            String query = "SELECT * FROM `hotel1`";
+	            DefaultListModel dlm = new DefaultListModel();
+	            try {
+					ps = DBconnection.getConnection().prepareStatement(query);
+					rs = ps.executeQuery();
+					while(rs.next()) {
+						String id = rs.getString("id");
+						dlm.addElement(id);
+					}
+					listView.setModel(dlm);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+	            
+			}
+		});
+		btnNewButton.setBounds(435, 46, 89, 23);
+		contentPane.add(btnNewButton);
 	}
 }

@@ -376,7 +376,7 @@ public class adminFrame extends JFrame {
 		
 		JLabel lblOda = new JLabel("Odalar:");
 		lblOda.setForeground(Color.WHITE);
-		lblOda.setBounds(375, 50, 150, 14);
+		lblOda.setBounds(375, 50, 61, 14);
 		contentPane.add(lblOda);
 		
 		JLabel lblTarih = new JLabel("Tarih:\r\n");
@@ -388,6 +388,32 @@ public class adminFrame extends JFrame {
 		lblKirmiziDolu.setForeground(Color.WHITE);
 		lblKirmiziDolu.setBounds(229, 220, 116, 14);
 		contentPane.add(lblKirmiziDolu);
+		
+		JButton btnNewButton = new JButton("Yenile");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				//(hasan) listeyi yenileme kodu
+		        PreparedStatement ps;
+		        ResultSet rs;
+	            String query = "SELECT * FROM `hotel1`";
+	            DefaultListModel dlm = new DefaultListModel();
+	            try {
+					ps = DBconnection.getConnection().prepareStatement(query);
+					rs = ps.executeQuery();
+					while(rs.next()) {
+						String id = rs.getString("id");
+						dlm.addElement(id);
+					}
+					list_view.setModel(dlm);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+	            
+			}
+		});
+		btnNewButton.setBounds(435, 46, 89, 23);
+		contentPane.add(btnNewButton);
 		
 	}
 }
