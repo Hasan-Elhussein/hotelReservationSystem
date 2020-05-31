@@ -44,6 +44,7 @@ public class mainFrame extends JFrame {
 	JDateChooser dateChooser = new JDateChooser();
 	public static JTextField tf_kullanici;
 	JButton btnRezervasyonYap = new JButton("Rezervasyon yap");
+	JButton btnOdadanAyir = new JButton("Odadan ayril");
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -144,6 +145,12 @@ public class mainFrame extends JFrame {
 			        		dateChooser.setEnabled(false);
 			        		btnRezervasyonYap.setEnabled(false);
 			        	}
+			        	String add6 = rs.getString("user");
+			        	if(tf_kullanici.getText().equals(add6))
+			        		btnOdadanAyir.setEnabled(true);
+			        	else
+			        		btnOdadanAyir.setEnabled(false);
+
 		        	}
 				} catch (Exception e2) {
 					
@@ -258,7 +265,31 @@ public class mainFrame extends JFrame {
 		btnRezervasyonYap.setBounds(121, 243, 150, 23);
 		contentPane.add(btnRezervasyonYap);
 		
-		JButton btnOdadanAyir = new JButton("Odadan ayril");
+		btnOdadanAyir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				int odaNumarasi = Integer.parseInt(tf_odaNumarasi.getText());
+				
+				//(hasan) veritabandaki odayi sifirlayan kod
+				PreparedStatement ps;
+				String query = "UPDATE hotel1 SET kisi_sayisi=0, tarih=null, is_full=true, user=null WHERE id=?";
+				try {
+					
+					ps = DBconnection.getConnection().prepareStatement(query);
+					
+					ps.setInt(1, odaNumarasi);
+					
+					ps.executeUpdate();
+					
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+			}
+		});
 		btnOdadanAyir.setBounds(121, 277, 150, 23);
 		contentPane.add(btnOdadanAyir);
 		dateChooser.getCalendarButton().setForeground(new Color(255, 255, 255));
