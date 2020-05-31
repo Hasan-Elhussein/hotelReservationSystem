@@ -84,10 +84,13 @@ public class login extends JFrame {
 		        	ps0.setString(2, parola);
 		        	
 		        	rs = ps0.executeQuery();
-		        	//(hasan) veritabanda kullanici mevcut olup olmadigini kontrol eden kodu
+		        	
+		        	//(hasan) kullanici mevcut ise, manFrame sayfasi acilir ve ona kullanicinin ismi gonderilir
 		        	if(rs.next()){
 		        		dispose();
-		        		new mainFrame().setVisible(true);
+		        		mainFrame x = new mainFrame();
+		        		x.tf_kullanici.setText(rs.getString("name"));
+		        		x.setVisible(true);
 		        		}
 		        	else
 		        		JOptionPane.showMessageDialog(null, "telefon numara veya parola hatali");

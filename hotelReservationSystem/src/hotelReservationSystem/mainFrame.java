@@ -42,6 +42,8 @@ public class mainFrame extends JFrame {
 	static JList listView = new JList();
 	
 	JDateChooser dateChooser = new JDateChooser();
+	public static JTextField tf_kullanici;
+	JButton btnRezervasyonYap = new JButton("Rezervasyon yap");
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -134,11 +136,13 @@ public class mainFrame extends JFrame {
 			        		tf_doluMu.setText("BOS");
 			        		tf_kisiSayisi.setEditable(true);
 			        		dateChooser.setEnabled(true);
+			        		btnRezervasyonYap.setEnabled(true);
 			        	}
 			        	else {
 			        		tf_doluMu.setText("DOLU");
 			        		tf_kisiSayisi.setEditable(false);
 			        		dateChooser.setEnabled(false);
+			        		btnRezervasyonYap.setEnabled(false);
 			        	}
 		        	}
 				} catch (Exception e2) {
@@ -220,9 +224,10 @@ public class mainFrame extends JFrame {
 		label_5.setBounds(375, 50, 58, 14);
 		contentPane.add(label_5);
 		
-		JButton btnRezervasyonYap = new JButton("Rezervasyon yap");
 		btnRezervasyonYap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				
 				
 				int odaNumarasi = Integer.parseInt(tf_odaNumarasi.getText());
 				int kisiSayisi = Integer.parseInt(tf_kisiSayisi.getText());
@@ -230,14 +235,15 @@ public class mainFrame extends JFrame {
 				
 				//(hasan) rezervasyon bilgileri veritabanina aktaran kodu
 				PreparedStatement ps;
-				String query = "UPDATE hotel1 SET kisi_sayisi=?, tarih=?, is_full=false WHERE id=?";
+				String query = "UPDATE hotel1 SET kisi_sayisi=?, tarih=?, is_full=false, user=? WHERE id=?";
 				try {
 					
 					ps = DBconnection.getConnection().prepareStatement(query);
 					
 					ps.setInt(1, kisiSayisi);
 					ps.setDate(2, java.sql.Date.valueOf(df.format(dateChooser.getDate())));
-					ps.setInt(3, odaNumarasi);
+					ps.setString(3, tf_kullanici.getText());
+					ps.setInt(4, odaNumarasi);
 					
 					ps.executeUpdate();
 					
@@ -245,7 +251,6 @@ public class mainFrame extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
 				
 				
 			}
@@ -293,5 +298,16 @@ public class mainFrame extends JFrame {
 		});
 		btnNewButton.setBounds(435, 46, 89, 23);
 		contentPane.add(btnNewButton);
+		
+		JLabel lblMerhabalar = new JLabel("Merhabalar:");
+		lblMerhabalar.setForeground(Color.WHITE);
+		lblMerhabalar.setBounds(10, 46, 111, 14);
+		contentPane.add(lblMerhabalar);
+		
+		tf_kullanici = new JTextField();
+		tf_kullanici.setEditable(false);
+		tf_kullanici.setColumns(10);
+		tf_kullanici.setBounds(121, 42, 150, 20);
+		contentPane.add(tf_kullanici);
 	}
 }
