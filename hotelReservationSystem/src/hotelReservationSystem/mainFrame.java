@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.Color;
@@ -168,7 +169,7 @@ public class mainFrame extends JFrame {
 		});
 		
 		
-		listView.setBounds(350, 87, 149, 237);
+		listView.setBounds(350, 87, 149, 203);
 		contentPane.add(listView);
 		
 		JLabel lblHotelReservationSystem = new JLabel("Hotel Reservation System");
@@ -248,6 +249,7 @@ public class mainFrame extends JFrame {
 				DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 				
 				//(hasan) rezervasyon bilgileri veritabanina aktaran kodu
+				if(kisiSayisi > 0 && java.sql.Date.valueOf(df.format(dateChooser.getDate())) != null) {
 				PreparedStatement ps;
 				String query = "UPDATE hotel1 SET kisi_sayisi=?, tarih=?, is_full=false, user=? WHERE id=?";
 				try {
@@ -265,6 +267,9 @@ public class mainFrame extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				}
+				else
+					JOptionPane.showMessageDialog(null, "girdiginiz bilgileri eksiktir.");
 				
 				
 			}
@@ -386,7 +391,35 @@ public class mainFrame extends JFrame {
 				
 			}
 		});
-		btnBosOdalariFilterle.setBounds(349, 337, 150, 23);
+		btnBosOdalariFilterle.setBounds(350, 301, 150, 23);
 		contentPane.add(btnBosOdalariFilterle);
+		
+		JButton btnSdf = new JButton("Odalarimi filterle");
+		btnSdf.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				//(hasan) listede sadece giris yapan kullanicinin odalarini filtirleme kodu
+		        PreparedStatement ps;
+		        ResultSet rs;
+	            String query = "SELECT * FROM `hotel1` WHERE user=\""+tf_kullanici.getText()+"\"";
+	            DefaultListModel dlm = new DefaultListModel();
+	            try {
+					ps = DBconnection.getConnection().prepareStatement(query);
+					rs = ps.executeQuery();
+					while(rs.next()) {
+						String id = rs.getString("id");
+						dlm.addElement(id);
+					}
+					listView.setModel(dlm);
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
+	            
+	            
+			}
+		});
+		btnSdf.setBounds(350, 337, 150, 23);
+		contentPane.add(btnSdf);
 	}
 }
